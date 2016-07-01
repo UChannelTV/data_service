@@ -1,0 +1,32 @@
+<h2>Matched Filler Videos</h2>
+<p id="notice"><%= notice %></p>
+
+<% if ! @videos.nil? %>
+  <table id='filler_vieos' class="display data_full">
+    <thead>
+      <tr>
+      <% 0.upto(@fields[0] - 1) do |n| %>
+        <th align='left' rowspan="2"><%= @fields[1][n] %></th>
+      <% end %>
+      <% @fields[0].upto(@fields[1].size - 1) do |n| %>
+        <th align='left' colspan="3"><%= @fields[1][n] %></th>
+      <% end %>
+      </tr>
+      <tr>
+      <% @fields[2].each do |field| %>
+        <th align='left'><%= field %></th>
+      <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @videos.each do |video| %>
+        <tr>
+          <% video.each do |val| %>
+            <td><%= val %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

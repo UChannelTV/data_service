@@ -1,0 +1,22 @@
+<%= form_for(@video, url: @url) do |f| %>
+  <table id='video_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Name</td><td><%= f.text_field :name %></td></tr>
+      <tr><td>Source</td><td><%= f.text_field :source %></td></tr>
+      <tr><td>Length (seconds)</td><td><%= f.text_field :length %></td></tr>
+      <tr><td>Expired</td><td><%= f.check_box :expired %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -9,6 +9,19 @@ Rails.application.routes.draw do
     resources :filler_videos
   end
 
+  scope 'admin' do
+    resources :filler_video do
+      collection do
+        get :match_search
+        post :match_result
+      end
+    end
+
+    resources :filler_video
+  end
+  
+
+  root :to => "filler_video#index"
   #resources :filler_videos
  
   # The priority is based upon order of creation: first created -> highest priority.

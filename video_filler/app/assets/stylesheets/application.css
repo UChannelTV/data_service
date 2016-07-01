@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+
+
+.key_value_info {
+  font-size: 110%
+}
+
+.key_value_info_key {
+  padding: 10px;
+  font-weight: bold;
+  color: Maroon
+}
+
+.key_value_info_value {
+  padding: 10px;
+  padding-left: 20px;
+  text-align: right
+}
+

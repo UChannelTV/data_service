@@ -1,0 +1,25 @@
+<h2>Search Filler Video Candidates</h2>
+
+<%= form_tag(url_for(action: 'match_result'), target: '_blank') do |f| %>
+  <table id='match_parameter' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Target Duration</td><td><%= text_field_tag 'duration', nil, placeholder: 'Enter target duration in seconds', size: 50 %></td></tr>
+      <tr><td>Allowed Gap</td><td><%= text_field_tag 'allowed_ga', 3, placeholder: 'Enter maximum gap of duration allowed in seconds', size: 50 %></td></tr>
+      <tr><td>Mininum Candidates</td><td><%= text_field_tag 'min_candidate', 1, placeholder: 'Enter mininum number of candidates', size: 50 %></td></tr>
+      <tr><td>Maxinum Candidates</td><td><%= text_field_tag 'max_candidate', 10, placeholder: 'Enter maximum number of candidates', size: 50 %></td></tr>
+      <tr><td>Allow Duplicate Video</td><td><%= check_box_tag 'allow_duplicate', checked=false %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'submit' %>
+  </div>
+<% end %>

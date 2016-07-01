@@ -1,0 +1,11 @@
+<h2>Edit Filler Video</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @video.nil? %> 
+  <%= render 'form' %>
+
+  <p/>
+  <p/>
+  <%= link_to 'Show', action: 'show', id: @video.id %>
+<% end %>

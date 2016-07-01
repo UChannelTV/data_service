@@ -1,0 +1,27 @@
+<h2>Filler Video</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @video.nil? %>
+  <table id='video_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @video.display_array.each do |val| %>
+        <tr>
+          <td><%= val[0] %></td>
+          <td><%= val[1] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @video.id %>
+<% end %>  
