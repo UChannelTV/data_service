@@ -1,0 +1,36 @@
+<h2>Filler Video</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @video.nil? %>
+  <table id='video_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>UChannel ID</td><td><%= @video.uchannel_id %></td></tr>
+      <tr><td>Youtube ID</td><td><%= @video.youtube_id %></td></tr>
+      <tr><td>Duration</td><td><%= @video.duration %></td></tr>
+      <tr><td>Published At</td><td><%= @video.published_at %></td></tr>
+      <tr><td>Title</td><td><%= @video.title %></td></tr>
+      <tr><td>Description</td><td><%= @video.description %></td></tr>
+      <tr><td>Tags</td><td><%= @video.tags %></td></tr>
+      <tr><td>Category ID</td><td><%= @video.category_id %></td></tr>
+      <tr><td>Live Broadcast Content</td><td><%= @video.live_broadcast_content %></td></tr>
+      <tr><td>Upload Status</td><td><%= @video.upload_status %></td></tr>
+      <tr><td>Privacy Status</td><td><%= @video.privacy_status %></td></tr>
+      <tr><td>Embeddable</td><td><%= @video.embeddable %></td></tr>
+      <tr><td>Thumbnail Small</td><td><img src='<%= @video.thumbnail_small %>'/></td></tr>
+      <tr><td>Thumbnail Medium</td><td><img src='<%= @video.thumbnail_medium %>'/></td></tr>
+      <tr><td>Thumbnail Large</td><td><img src='<%= @video.thumbnail_large %>'/></td></tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @video.youtube_id %>
+<% end %>  

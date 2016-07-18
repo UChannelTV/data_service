@@ -1,0 +1,30 @@
+<h2>Youtube Upload List</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='videos_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">Youbute ID</th>
+      <th align="left">UChannel ID</th>
+      <th align="left">Title</th>
+      <th align="left">Published At</th>
+      <th align="left">Upload Statue</th>
+      <th align="left">Privacy Status</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @videos.each do |video| %>
+      <tr>
+        <td><%= link_to video.youtube_id, action: 'show', id: video.youtube_id %></td>
+        <td><%= video.uchannel_id %></td>
+        <td><%= video.title %></td>
+        <td><%= video.published_at %></td>
+        <td><%= video.upload_status %></td>
+        <td><%= video.privacy_status %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: video.youtube_id}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

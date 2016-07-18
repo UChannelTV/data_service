@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data Service Admin</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+  <%= stylesheet_link_tag '//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css' %>
+  <%= javascript_include_tag '//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js' %>
+
+  <script>
+    $(document).ready(function(){
+      $('table.display_only').DataTable({
+        "ordering": false,
+        "bFilter": false,
+        "bPaginate": false,
+        "bInfo": false
+      });
+
+      $('table.data_full').DataTable({
+        "order": []
+      });
+    })
+  </script>
+  
+  <% if content_for? :for_head %>
+    <%= yield :for_head %>
+  <% end %>
+</head>
+
+<body>
+  <div style="background:#F8F8FF">
+    <div class="left_menu">
+      <ul>
+      <% if params[:controller] == "filler_video_admin" %>
+        <li><%=link_to_unless_current "LIST", {controller: "filler_video_admin", action: "index"} %></li>
+        <li><%=link_to_unless_current "NEW", {controller: "filler_video_admin", action: "new"} %></li>
+        <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
+      <% elsif %>
+        <li><%=link_to_unless_current "LIST", {controller: "youtube_upload_admin", action: "index"} %></li>
+        <li><%=link_to_unless_current "NEW", {controller: "youtube_upload_admin", action: "new"} %></li>
+      <% end %>
+      </ul>
+    </div>
+    <div class="right_menu">
+      <ul>
+        <li><%=link_to_unless params[:controller] == "filler_video_admin", "FILLER", {controller: "filler_video_admin", action: "index"} %></li>
+        <li><%=link_to_unless params[:controller] == "youtube_upload_admin", "YOUTUBE", {controller: "youtube_upload_admin", action: "index"} %></li>
+      </ul>
+    </div>
+    <div style="clear: both;"></div>
+  </div>
+  <%= yield %>
+
+</body>
+</html>
