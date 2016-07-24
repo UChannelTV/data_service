@@ -1,15 +1,48 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  source: MyString
-  length: 1
-  video_url: MyString
+  name: MyName
+  source: MySource
+  duration: 100
+  video_url: MyUrl
   expired: false
 
 two:
-  name: MyString
-  source: MyString
-  length: 1
-  video_url: MyString
+  name: MyName2
+  source: MySource
+  duration: 88
+  video_url: MyUrl2
   expired: false
+
+three:
+  name: MyName3
+  source: MySource2
+  duration: 102
+  expired: false
+
+four:
+  name: MyName4
+  source: MySource
+  duration: 102
+  expired: true
+
+five:
+  name: MyName5
+  source: MySource2
+  duration: 100
+  expired: false
+
+test1:
+  name: TestName1
+  source: TestSource
+  duration: 10000
+  video_url: TestUrl
+  expired: true
+
+test2:
+  name: TestName2
+  source: TestSource
+  duration: 10000
+  video_url: TestUrl2
+  expired: false
+

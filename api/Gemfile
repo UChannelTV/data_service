@@ -33,11 +33,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Mysql for database
 gem 'mysql2', group: :development
 
-group :production, :test do
-  gem 'mysql'
-end
-
 gem 'rails_12factor', group: :production
+
+# Use ActiveModel Serializers for render JSON
+gem "active_model_serializers"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

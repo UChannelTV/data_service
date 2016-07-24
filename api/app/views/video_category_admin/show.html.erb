@@ -1,0 +1,27 @@
+<h2>Video Category</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %>
+  <table id='category_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Name</td><td><%= @record["name"] %></td></tr>
+      <tr><td>English Name</td><td><%= @record["english_name"] %></td></tr>
+      <tr><td>QR Code</td><td><%= @record["qr_code"] %></td></tr>
+      <tr><td>Created At</td><td><%= @record["created_at"] %></td></tr>
+      <tr><td>Updated At</td><td><%= @record["updated_at"] %></td></tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @record["id"] %>
+<% end %>  

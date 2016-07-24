@@ -1,0 +1,11 @@
+<h2>Edit Video Upload</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %> 
+  <%= render 'form' %>
+
+  <p/>
+  <p/>
+  <%= link_to 'Show', action: 'show', id: @record["id"] %>
+<% end %>

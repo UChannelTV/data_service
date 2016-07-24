@@ -95,7 +95,7 @@ module GoogleAPI
                       "thumbnail_medium" => snippet["thumbnails"]["medium"]["url"],
                       "thumbnail_large" => snippet["thumbnails"]["high"]["url"],
                       "live_broadcast_content" => snippet["liveBroadcastContent"],
-                      "tags" => snippet["tags"].to_json,
+                      "tags" => snippet["tags"],
                       "category_id" => snippet["categoryId"]
         }
       end

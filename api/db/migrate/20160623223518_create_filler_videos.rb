@@ -3,7 +3,7 @@ class CreateFillerVideos < ActiveRecord::Migration
     create_table :filler_videos do |t|
       t.string :name, null: false
       t.string :source, null: false
-      t.integer :length, null: false
+      t.integer :duration, null: false
       t.string :video_url
       t.boolean :expired, default: false
       t.datetime :created_at

@@ -1,0 +1,28 @@
+<h2>Video Upload</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %>
+  <table id='category_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Video ID</td><td><%= link_to @record["video_id"], {controller: 'video_admin', action: 'show', id: @record["video_id"]} %></td></tr>
+      <tr><td>Host</td><td><%= @record["host"] %></td></tr>
+      <tr><td>Host ID</td><td><%= link_to @record["host_id"], {controller: 'youtube_upload_admin', action: 'show', id: @record["host_id"]} %></td></tr>
+      <tr><td>Enabled</td><td><%= @record["enabled"] %></td></tr>
+      <tr><td>Created At</td><td><%= @record["created_at"] %></td></tr>
+      <tr><td>Updated At</td><td><%= @record["updated_at"] %></td></tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= link_to 'Edit', action: 'edit', id: @record["id"] %>
+<% end %>  

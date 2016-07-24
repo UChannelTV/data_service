@@ -30,4 +30,16 @@ module HttpUtil
   def self.https_get(url, header)
     return get(url, header, true)
   end
+
+  def self.put(url, header, body, use_ssl=false)
+    uri = URI.parse(url)
+    http = initHttp(uri, use_ssl)
+    req = Net::HTTP::Put.new(uri, initheader = header)
+    req.body = body
+    return http.request(req)
+  end
+
+  def self.https_put(url, header, body)
+    return put(url, header, body, true)
+  end
 end

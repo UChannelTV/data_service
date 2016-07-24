@@ -1,0 +1,59 @@
+<h2>UChannel Video List</h2>
+<p id="notice"><%= notice %></p>
+
+<h3>Query</h3>
+<%= form_tag do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Category</td><td><%= select_tag "category", options_from_collection_for_select(@categories, "name", "name", @category) %></td></tr>
+      <tr><td>Status</td><td><%= select_tag "status", options_from_collection_for_select(@statuses, "status", "status", @status) %></td></tr>
+      <tr><td>limit</td><td><%= text_field_tag :limit, @limit, :size=>"50", :maxlength=>"254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Submit' %>
+  </div>
+<% end %>
+<br/>
+<br/>
+
+<table id='videos_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Title</th>
+      <th align="left">Category</th>
+      <th align="left">Status</th>
+      <th align="left">Parent</th>
+      <th align="left">Duration</th>
+      <th align="left">Published at</th>
+      <th align="left">Uploads</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |video| %>
+      <tr>
+        <td><%= link_to video["id"], action: 'show', id: video["id"] %></td>
+        <td><%= video["title"] %></td>
+        <td><%= video["category"] %></td>
+        <td><%= video["status"] %></td>
+        <td><%= video["parent_video"] %></td>
+        <td><%= "%d:%02d" % [video["duration"]/60, video["duration"]%60] %></td>
+        <td><%= video["created_at"] %></td>
+        <td><%= link_to "View All", {controller: 'video_upload_admin', action: 'index', video_id: video["id"]} %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: video["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

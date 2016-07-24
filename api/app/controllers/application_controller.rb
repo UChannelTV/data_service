@@ -8,7 +8,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def json_request?
-    return true if "GET".eql?(request.method.upcase)
-    "application/json".eql?(request.content_type.downcase)
+    return true if request.path.start_with?("/api/")
+    "application/json".eql?(request.content_type.to_s.downcase)
+  end
+
+  def json_rsp(data, msg, code, match)
+    if code == match
+      render json: data, status: code
+    else
+      render json: msg, status: code
+    end
   end
 end

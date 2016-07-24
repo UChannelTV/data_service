@@ -1,7 +1,6 @@
 class CreateYoutubeUploads < ActiveRecord::Migration
   def change
     create_table :youtube_uploads, id: false do |t|
-      t.integer :uchannel_id
       t.string :youtube_id
       t.integer :duration
       t.datetime :published_at
@@ -21,7 +20,6 @@ class CreateYoutubeUploads < ActiveRecord::Migration
     end
 
     add_index :youtube_uploads, :youtube_id, :unique => true
-    add_index :youtube_uploads, :uchannel_id
     add_index :youtube_uploads, :published_at
     execute "ALTER TABLE youtube_uploads change `created_at` `created_at` datetime not null default CURRENT_TIMESTAMP;"
     execute "ALTER TABLE youtube_uploads change `updated_at` `updated_at` timestamp"

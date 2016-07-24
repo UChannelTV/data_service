@@ -1,7 +1,7 @@
 module FillerTool
   class Fillers
     def initialize(videos, duplicate)
-      @videos = videos
+      @videos = videos.sort{|a, b| a["duration"] <=> b["duration"]}
       @lens = []
       @numVideos = videos.size
       @shift = (duplicate) ? 1 : 0
@@ -36,7 +36,7 @@ module FillerTool
       end
 
       0.upto(@numVideos - 1) do |index|
-        len = @videos[index][:length]
+        len = @videos[index][:duration]
         n = duration - len
         next if n < 0
         cache[n].each do |l| 
@@ -48,10 +48,10 @@ module FillerTool
           return [[], 0] if numMatches >= maxCandidate
         end
 
-        0.upto(n-1) do |m|
+        0.upto(n - 1) do |m|
           k = m + len
           cache[m].each do |l|
-            break if newCache[k].size >= (numMatches + 1)
+            break if newCache[k].size >= (maxCandidate + 1)
             next if l.size > 0 and l.last >= (index + @shift) 
             v = l.dup
             v << index
@@ -67,20 +67,20 @@ module FillerTool
 
   def self.findFillers(duration, min_candidate, max_candidate, allowed_gap, allow_duplicate)
     duration = duration.to_i
-    return invalid_param('Total Duration') if duration <= 0
+    return invalid_param('total duration') if duration <= 0
 
     minCandidate = (min_candidate.nil?) ? 1 : min_candidate.to_i
-    return invalid_param('Mininum Candidates') if minCandidate <= 0
+    return invalid_param('mininum candidates') if minCandidate <= 0
 
     maxCandidate = (max_candidate.nil?) ? minCandidate + 10 : max_candidate.to_i
-    return invalid_param('Maximum Candidates') if minCandidate > maxCandidate
+    return invalid_param('maximum candidates') if minCandidate > maxCandidate
 
     gapAllowed = (allowed_gap.nil?) ? 3 : allowed_gap.to_i
-    return invalid_param('Allowed Gap') if gapAllowed < 0
+    return invalid_param('allowed gap') if gapAllowed < 0
     
     duplicate = (allow_duplicate.nil?) ? false : (allow_duplicate.downcase.eql?("true"))
 
-    videos = FillerVideo.select("id, name, source, length").where("expired = 0 and length <= ?", duration)
+    videos = FillerVideo.select("id, name, source, duration").where("expired = 0 and duration <= ?", duration)
     retVal, numCandidates = {}, 0
     filler = Fillers.new(videos, duplicate)
 
@@ -128,7 +128,7 @@ module FillerTool
         0.upto(n-1) do |m|
           tv << vs[m].name
           tv << vs[m].source
-          tv << durStr(vs[m].length)
+          tv << durStr(vs[m].duration)
         end
         n.upto(maxFillers-1) do
           tv << "NA"
@@ -151,7 +151,7 @@ module FillerTool
   end
 
   def self.invalid_param(name)
-    [nil, "Please set proper value for parameter '#{name}'", 400]
+    [nil, {"error" => "Invalid value for #{name}"}, 400]
   end
 
   def self.durStr(dur)

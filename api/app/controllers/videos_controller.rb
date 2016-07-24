@@ -1,74 +1,55 @@
-class VideosController < ApplicationController
-  before_action :set_uchannel_video, only: [:show, :edit, :update, :destroy]
+class VideosController < ApiController
+  @@query = "left join video_uploads on videos.id = video_id and host = 'youtube' and enabled = 1"
 
-  # GET /uchannel_videos
-  # GET /uchannel_videos.json
-  def index
-    @uchannel_videos = Video.all
+  def initialize
+    super(Video)
   end
 
-  # GET /uchannel_videos/1
-  # GET /uchannel_videos/1.json
-  def show
+  def list_status
+    render json: VideoStatus.all
   end
 
-  # GET /uchannel_videos/new
-  def new
-    @uchannel_video = Video.new
-  end
-
-  # GET /uchannel_videos/1/edit
-  def edit
-  end
-
-  # POST /uchannel_videos
-  # POST /uchannel_videos.json
-  def create
-    @uchannel_video = Video.new(uchannel_video_params)
-
-    respond_to do |format|
-      if @uchannel_video.save
-        format.html { redirect_to @uchannel_video, notice: 'Uchannel video was successfully created.' }
-        format.json { render :show, status: :created, location: @uchannel_video }
-      else
-        format.html { render :new }
-        format.json { render json: @uchannel_video.errors, status: :unprocessable_entity }
-      end
+  def formatted 
+    video = Video.joins(:category).joins(@@query).
+        select("videos.title, videos.description, video_categories.qr_code, video_uploads.host_id").
+        where(id: params[:id]).first
+    if video.nil?
+      video = {}
+    else
+      video = {"title" => video.title, "description" => video.description, "qr_code" => video.qr_code, "youtube_id" => video.host_id}
     end
+    render json: video
   end
 
-  # PATCH/PUT /uchannel_videos/1
-  # PATCH/PUT /uchannel_videos/1.json
-  def update
-    respond_to do |format|
-      if @uchannel_video.update(uchannel_video_params)
-        format.html { redirect_to @uchannel_video, notice: 'Uchannel video was successfully updated.' }
-        format.json { render :show, status: :ok, location: @uchannel_video }
+  def category
+    limit, first_id, cid = params[:limit].to_i, params[:start_video].to_i, params[:id].to_i
+    
+    if cid == 0 || limit == 0
+      render json: {"videos":[]}
+    else
+      videos = getVideos(cid, first_id, limit).collect{|x| x.as_json}
+      
+      if videos.size > limit
+        render json: {"videos" => videos[0, limit], "next" => videos[limit]["id"]}
       else
-        format.html { render :edit }
-        format.json { render json: @uchannel_video.errors, status: :unprocessable_entity }
+        render json: {"videos" => videos}
       end
-    end
-  end
-
-  # DELETE /uchannel_videos/1
-  # DELETE /uchannel_videos/1.json
-  def destroy
-    @uchannel_video.destroy
-    respond_to do |format|
-      format.html { redirect_to uchannel_videos_url, notice: 'Uchannel video was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_uchannel_video
-      @uchannel_video = Video.find(params[:id])
+  def getVideos(cid, first_id, limit)
+    if first_id == 0
+      return Video.where(category_id: cid).where(status_id: 2).where(parent_video: nil).
+        select("id, title, thumbnail, duration").order(created_at: :desc, id: :desc).
+        limit(limit+1)
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def uchannel_video_params
-      params.require(:uchannel_video).permit(:duration, :created_at, :title, :description, :video_url, :tags, :category, :status)
-    end
+    video = Video.find_by(id: first_id)
+    return [] if video.nil?
+    return Video.where(category_id: cid).where(status_id: 2).where(parent_video: nil).
+        where("(created_at = '#{video.created_at}' and id <= #{first_id}) || created_at < '#{video.created_at}'").
+        select("id, title, thumbnail, duration").order(created_at: :desc, id: :desc).
+        limit(limit+1)
+  end
 end

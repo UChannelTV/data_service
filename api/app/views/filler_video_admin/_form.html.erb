@@ -1,4 +1,4 @@
-<%= form_for(@video, url: @url) do |f| %>
+<%= form_tag(@url, method: @method) do %>
   <table id='video_info' class="display display_only">
     <thead>
       <tr>
@@ -8,15 +8,16 @@
     </thead>
 
     <tbody>
-      <tr><td>Name</td><td><%= f.text_field :name, size: "50", maxlength: "254"%></td></tr>
-      <tr><td>Source</td><td><%= f.text_field :source, size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Duration (seconds)</td><td><%= f.text_field :length, size: "50", maxlength: "254" %></td></tr>
-      <tr><td>Expired</td><td><%= f.check_box :expired %></td></tr>
+      <tr><td>Name</td><td><%= text_field_tag "name", @record["name"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Source</td><td><%= text_field_tag "source", @record["source"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Duration (seconds)</td><td><%= text_field_tag "duration", @record["duration"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Video URL</td><td><%= text_field_tag "video_url", @record["video_url"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Expired</td><td><%= check_box_tag "expired", '1', @record["expired"] %></td></tr>
     </tbody>
   </table>
 
   <p/>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag %>
   </div>
 <% end %>

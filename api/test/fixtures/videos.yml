@@ -1,0 +1,40 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  duration: 1
+  title: MyString
+  description: MyString
+  video_url: MyString
+  tags: '[]'
+  category: one
+  status: one
+  other: MyString
+
+two:
+  duration: 1
+  title: MyString2
+  description: MyString2
+  video_url: MyString2
+  tags: '["tag1", "tag2"]'
+  status: two 
+  other: MyString
+
+test1:
+  duration: 1
+  title: MyTest1
+  description: MyTest1
+  video_url: MyTest1
+  tags: '["tag1", "tag2"]'
+  category: one
+  status: one
+  other: MyString
+
+test2:
+  duration: 1
+  title: MyTest2
+  description: MyTest2
+  video_url: MyTest2
+  tags: '[]'
+  category: one
+  status: one
+  other: MyString

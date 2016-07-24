@@ -1,0 +1,22 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='upload_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Video ID</td><td><%= text_field_tag "video_id", @record["video_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Host</td><td><%= text_field_tag "host", @record["host"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Host ID</td><td><%= text_field_tag "host_id", @record["host_id"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>Enabled</td><td><%= check_box_tag "enabled", '1', @record["enabled"] %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

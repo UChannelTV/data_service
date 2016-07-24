@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  english_name: MyString
+  qr_code: MyString
+
+two:
+  name: MyString2
+  english_name: MyString2
+  qr_code: MyString
+
+test1:
+  name: MyTest1
+  english_name: MyTest11
+  qr_code: MyQR
+
+test2:
+  name: MyTest2
+  english_name: MyTest22
+  qr_code: MyQR

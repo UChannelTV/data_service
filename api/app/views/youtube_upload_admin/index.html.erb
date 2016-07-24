@@ -1,29 +1,53 @@
-<h2>Youtube Upload List</h2>
+<h2>Youtube Video</h2>
 <p id="notice"><%= notice %></p>
+<br/>
 
+<h3>Query</h3>
+<%= form_tag do %>
+  <table id='list_query' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>limit</td><td><%= text_field_tag :limit, @limit, :size=>"50", :maxlength=>"254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag 'Submit' %>
+  </div>
+<% end %>
+
+<br/>
+<h3>List</h3>
 <table id='videos_list' class="display data_full">
   <thead>
     <tr>
       <th align="left">Youbute ID</th>
-      <th align="left">UChannel ID</th>
       <th align="left">Title</th>
       <th align="left">Published At</th>
       <th align="left">Upload Statue</th>
       <th align="left">Privacy Status</th>
+      <th align="left">Association</th>
       <th align="left">Action</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @videos.each do |video| %>
+    <% @records.each do |video| %>
       <tr>
-        <td><%= link_to video.youtube_id, action: 'show', id: video.youtube_id %></td>
-        <td><%= video.uchannel_id %></td>
-        <td><%= video.title %></td>
-        <td><%= video.published_at %></td>
-        <td><%= video.upload_status %></td>
-        <td><%= video.privacy_status %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: video.youtube_id}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to video["youtube_id"], "https://www.youtube.com/watch?v=" + video["youtube_id"], target: "_blank" %></td>
+        <td><%= link_to video["title"], {action: 'show', id: video["youtube_id"]} %></td>
+        <td><%= video["published_at"] %></td>
+        <td><%= video["upload_status"] %></td>
+        <td><%= video["privacy_status"] %></td>
+        <td><%= link_to 'View', video_upload_admin_index_path("host" => "youtube", "host_id" => video["youtube_id"]) %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: video["youtube_id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

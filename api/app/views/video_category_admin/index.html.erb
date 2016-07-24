@@ -1,0 +1,26 @@
+<h2>Video Categories</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='category_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Name</th>
+      <th align="left">English Name</th>
+      <th align="left">qr_code</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |category| %>
+      <tr>
+        <td><%= link_to category["id"], action: 'show', id: category["id"] %></td>
+        <td><%= category["name"] %></td>
+        <td><%= category["english_name"] %></td>
+        <td><%= category["qr_code"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: category["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

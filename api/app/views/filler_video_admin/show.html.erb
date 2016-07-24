@@ -1,8 +1,10 @@
 <h2>Filler Video</h2>
 
+<% if !notice.nil? %>
 <p id="notice"><%= notice %></p>
+<% end %>
 
-<% if ! @video.nil? %>
+<% if ! @record.nil? %>
   <table id='video_info' class="display display_only">
     <thead>
       <tr>
@@ -12,16 +14,18 @@
     </thead>
 
     <tbody>
-      <% @video.display_array.each do |val| %>
-        <tr>
-          <td><%= val[0] %></td>
-          <td><%= val[1] %></td>
-        </tr>
-      <% end %>
+      <tr><td>ID</td><td><%= @record["id"] %></td></tr>
+      <tr><td>Name</td><td><%= @record["name"] %></td></tr>
+      <tr><td>Source</td><td><%= @record["source"] %></td></tr>
+      <tr><td>Duration</td><td><%= "%02d:%02d" % [@record["duration"] / 60, @record["duration"] % 60] %></td></tr>
+      <tr><td>Video URL</td><td><%= @record["video_url"] %></td></tr>
+      <tr><td>Expired</td><td><%= @record["expired"] %></td></tr>
+      <tr><td>Created At</td><td><%= @record["created_at"] %></td></tr>
+      <tr><td>Updated At</td><td><%= @record["updated_at"] %></td></tr>
     </tbody>
   </table>
 
   <br/>
 
-  <%= link_to 'Edit', action: 'edit', id: @video.id %>
+  <%= link_to 'Edit', action: 'edit', id: @record["id"] %>
 <% end %>  

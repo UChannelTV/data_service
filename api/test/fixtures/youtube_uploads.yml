@@ -1,0 +1,65 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  youtube_id: 1
+  duration: 1
+  published_at: 2016-07-16T16:56:55Z
+  title: MyString
+  description: MyString
+  thumbnail_small: MyString
+  thumbnail_medium: MyString
+  thumbnail_large: MyString
+  tags: '["tag1", "tag2"]'
+  category_id: MyString
+  live_broadcast_content: MyString
+  upload_status: MyString
+  privacy_status: MyString
+  embeddable: false
+
+two:
+  youtube_id: 2
+  duration: 1
+  published_at: 2016-07-16T16:56:55Z
+  title: MyString2
+  description: MyString2
+  thumbnail_small: MyString
+  thumbnail_medium: MyString
+  thumbnail_large: MyString
+  tags: '[]'
+  category_id: MyString
+  live_broadcast_content: MyString
+  upload_status: MyString
+  privacy_status: MyString
+  embeddable: true
+
+three:
+  youtube_id: 3
+  duration: 1
+  published_at: 2016-07-16T16:56:55Z
+  title: MyString2
+  description: MyString2
+  thumbnail_small: MyString
+  thumbnail_medium: MyString
+  thumbnail_large: MyString
+  tags: '[]'
+  category_id: MyString
+  live_broadcast_content: MyString
+  upload_status: MyString
+  privacy_status: MyString
+  embeddable: true
+
+four:
+  youtube_id: 4
+  duration: 10
+  published_at: 2016-07-17T16:56:55Z
+  title: MyTitle
+  description: MyDesc
+  thumbnail_small: t1
+  thumbnail_medium: t2
+  thumbnail_large: t3
+  tags: '["x1","x2","x3"]'
+  category_id: MyCat
+  live_broadcast_content: MyCont
+  upload_status: status
+  privacy_status: status2
+  embeddable: false

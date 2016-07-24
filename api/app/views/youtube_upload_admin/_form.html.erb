@@ -1,4 +1,4 @@
-<%= form_for(@video, url: @url) do |f| %>
+<%= form_tag(@url, method: @method) do %>
   <table id='video_info' class="display display_only">
     <thead>
       <tr>
@@ -8,26 +8,25 @@
     </thead>
 
     <tbody>
-      <tr><td>UChannel ID</td><td><%= f.text_field :uchannel_id, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Youtube ID</td><td><%= f.text_field :youtube_id, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Duration (second)</td><td><%= f.text_field :duration, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Published At</td><td><%= f.text_field :published_at, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Title</td><td><%= f.text_field :title, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Description</td><td><%= f.text_area :description, cols: "50", rows: "5"%></td></tr>
-      <tr><td>Thumbnail Small</td><td><%= f.text_field :thumbnail_small, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Thumbnail Medium</td><td><%= f.text_field :thumbnail_medium, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Thumbnail Large</td><td><%= f.text_field :thumbnail_large, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Tags</td><td><%= f.text_area :tags, cols: "50", rows: "3" %></td></tr>
-      <tr><td>Category ID</td><td><%= f.text_field :category_id, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Live Broadcast Content</td><td><%= f.text_field :live_broadcast_content, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Upload Status</td><td><%= f.text_field :upload_status, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Privacy Status</td><td><%= f.text_field :privacy_status, :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Embeddable</td><td><%= f.check_box :embeddable %></td></tr>
+      <tr><td>Youtube ID</td><td><%= text_field_tag "youtube_id", @record["youtube_id"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Duration (second)</td><td><%= text_field_tag "duration", @record["duration"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Published At</td><td><%= text_field_tag "published_at", @record["published_at"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Title</td><td><%= text_field_tag "title", @record["title"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Description</td><td><%= text_area_tag "description", @record["description"], cols: "50", rows: "5"%></td></tr>
+      <tr><td>Thumbnail Small</td><td><%= text_field_tag "thumbinal_small", @record["thumbnail_small"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Thumbnail Medium</td><td><%= text_field_tag "thumbnail_medium", @record["thumbnail_medium"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Thumbnail Large</td><td><%= text_field_tag "thumbnail_large", @record["thumbnail_large"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Tags</td><td><%= text_area_tag "tags", @record["tags"], cols: "50", rows: "3" %></td></tr>
+      <tr><td>Category ID</td><td><%= text_field_tag "category_id", @record["category_id"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Live Broadcast Content</td><td><%= text_field_tag "live_broadcast_contest", @record["live_broadcast_content"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Upload Status</td><td><%= text_field_tag "upload_status", @record["upload_status"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Privacy Status</td><td><%= text_field_tag "privacy_status", @record["privacy_status"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Embeddable</td><td><%= check_box_tag "embeddable", '1', @record["embeddable"] %></td></tr>
     </tbody>
   </table>
 
   <p/>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag %>
   </div>
 <% end %>

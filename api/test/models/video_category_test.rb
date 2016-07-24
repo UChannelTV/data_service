@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UchannelVideoTest < ActiveSupport::TestCase
+class VideoCategoryTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

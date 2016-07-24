@@ -1,30 +1,64 @@
 Rails.application.routes.draw do
-  scope 'api/v1.0' do
-    resources :videos
-    resources :youtube_uploads
+  scope 'api/v1.0', defaults: { format: :json } do
+    resources :videos do
+      collection do
+        get :list_status, :category
+      end
+      member do
+        get :formatted
+      end
+    end
+
     resources :filler_videos do
       collection do
         get :find
       end
     end
-    
+
+    resources :video_uploads do
+      collection do
+        get :index
+        post :create
+        put :enable, :disable, :video
+        delete :destroy
+      end
+    end
+        
+    resources :videos
     resources :filler_videos
+    resources :youtube_uploads
+    resources :video_categories
   end
 
-  scope 'admin' do
+  scope 'admin' do 
     resources :filler_video_admin do
       collection do
         get :match_search
-        post :match_result
+        post :index, :match_result
       end
     end
 
+    resources :youtube_upload_admin do
+      collection do
+        post :index
+      end
+    end
+
+    resources :video_admin do
+      collection do
+        post :index
+      end
+    end
+
+    resources :video_admin
     resources :filler_video_admin
     resources :youtube_upload_admin
+    resources :video_category_admin
+    resources :video_upload_admin
   end
   
 
-  root :to => "filler_video_admin#index"
+  root :to => "video_admin#index"
  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

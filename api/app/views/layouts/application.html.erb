@@ -33,18 +33,17 @@
   <div style="background:#F8F8FF">
     <div class="left_menu">
       <ul>
-      <% if params[:controller] == "filler_video_admin" %>
-        <li><%=link_to_unless_current "LIST", {controller: "filler_video_admin", action: "index"} %></li>
-        <li><%=link_to_unless_current "NEW", {controller: "filler_video_admin", action: "new"} %></li>
-        <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
-      <% elsif %>
-        <li><%=link_to_unless_current "LIST", {controller: "youtube_upload_admin", action: "index"} %></li>
-        <li><%=link_to_unless_current "NEW", {controller: "youtube_upload_admin", action: "new"} %></li>
-      <% end %>
+        <li><%=link_to_unless_current "LIST", {controller: params[:controller], action: "index"} %></li>
+        <li><%=link_to_unless_current "NEW", {controller: params[:controller], action: "new"} %></li>
+        <% if params[:controller] == "filler_video_admin" %>
+          <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
+        <% end %>
       </ul>
     </div>
     <div class="right_menu">
       <ul>
+        <li><%=link_to_unless params[:controller] == "video_admin", "VIDEO", {controller: "video_admin", action: "index"} %></li>
+        <li><%=link_to_unless params[:controller] == "video_category_admin", "CATEGORY", {controller: "video_category_admin", action: "index"} %></li>
         <li><%=link_to_unless params[:controller] == "filler_video_admin", "FILLER", {controller: "filler_video_admin", action: "index"} %></li>
         <li><%=link_to_unless params[:controller] == "youtube_upload_admin", "YOUTUBE", {controller: "youtube_upload_admin", action: "index"} %></li>
       </ul>
