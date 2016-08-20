@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  use_doorkeeper do
+    # it accepts :authorizations, :tokens, :applications and :authorized_applications
+    controllers :applications => 'oauth_applications'
+  end
+
   scope 'api/v1.0', defaults: { format: :json } do
     resources :videos do
       collection do
@@ -56,8 +61,12 @@ Rails.application.routes.draw do
     resources :video_category_admin
     resources :video_upload_admin
   end
-  
 
+  resources :users
+  resources :sessions, only: [:new, :create]
+  resources :heartbeat, only: [:index]
+  get '/logout' => 'sessions#destroy'
+  
   root :to => "video_admin#index"
  
   # The priority is based upon order of creation: first created -> highest priority.

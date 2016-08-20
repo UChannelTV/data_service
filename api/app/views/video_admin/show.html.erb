@@ -27,6 +27,7 @@
       <tr><td>Status</td><td><%= @record["status"] %></td></tr>
       <tr><td>Parent Video</td><td><%= @record["parent_video"] %></td></tr>
       <tr><td>Uploads</td><td><%= link_to "View All", {controller: 'video_upload_admin', action: 'index', video_id: @record["id"]} %></td></tr>
+      <tr><td>Thumbnail</td><td><%= image_tag(@record["thumbnail"]) %></td></tr>
       <tr><td>Other</td><td><%= @record["other"] %></td></tr>
     </tbody>
   </table>

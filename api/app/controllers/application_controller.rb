@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token, if: :json_request?
 
+  before_filter :allow_cors, :authenticate
+
   protected
 
   def json_request?
@@ -19,4 +21,22 @@ class ApplicationController < ActionController::Base
       render json: msg, status: code
     end
   end
+
+  def allow_cors
+    headers['Access-Control-Allow-Origin'] = '*'
+  end
+
+  def authenticate
+    if session[:user_id].nil? && !doorkeeper_token.nil?
+      session[:user_id] = doorkeeper_token.resource_owner_id
+    end
+    redirect_to new_session_path if session[:user_id].nil?
+  end
+
+  private
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  helper_method :current_user
 end

@@ -4,6 +4,6 @@ require 'json'
 
 logger = Logger.new(STDOUT)
 collector = YoutubeTools::VideoConverter.new(ARGV[0], logger)
-collector.run(10)
+collector.run(100)
 
 

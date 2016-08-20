@@ -1,0 +1,24 @@
+<h2>Users</h2>
+<p id="notice"><%= notice %></p>
+
+<table id='category_list' class="display data_full">
+  <thead>
+    <tr>
+      <th align="left">ID</th>
+      <th align="left">Name</th>
+      <th align="left">Admin</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.each do |user| %>
+      <tr>
+        <td><%= link_to user["id"], action: 'show', id: user["id"] %></td>
+        <td><%= user["name"] %></td>
+        <td><%= user["admin"] %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: user["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

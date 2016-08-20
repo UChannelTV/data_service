@@ -33,19 +33,27 @@
   <div style="background:#F8F8FF">
     <div class="left_menu">
       <ul>
-        <li><%=link_to_unless_current "LIST", {controller: params[:controller], action: "index"} %></li>
-        <li><%=link_to_unless_current "NEW", {controller: params[:controller], action: "new"} %></li>
-        <% if params[:controller] == "filler_video_admin" %>
-          <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
+        <% if ! ["sessions"].include?(params[:controller]) %>
+          <li><%=link_to_unless_current "LIST", {action: "index"} %></li>
+          <li><%=link_to_unless_current "NEW", {action: "new"} %></li>
+          <% if params[:controller] == "filler_video_admin" %>
+            <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
+          <% end %>
         <% end %>
       </ul>
     </div>
     <div class="right_menu">
       <ul>
-        <li><%=link_to_unless params[:controller] == "video_admin", "VIDEO", {controller: "video_admin", action: "index"} %></li>
-        <li><%=link_to_unless params[:controller] == "video_category_admin", "CATEGORY", {controller: "video_category_admin", action: "index"} %></li>
-        <li><%=link_to_unless params[:controller] == "filler_video_admin", "FILLER", {controller: "filler_video_admin", action: "index"} %></li>
-        <li><%=link_to_unless params[:controller] == "youtube_upload_admin", "YOUTUBE", {controller: "youtube_upload_admin", action: "index"} %></li>
+        <li><%=link_to_unless params[:controller] == "video_admin", "VIDEO", video_admin_index_path %></li>
+        <li><%=link_to_unless params[:controller] == "video_category_admin", "CATEGORY", video_category_admin_index_path %></li>
+        <li><%=link_to_unless params[:controller] == "filler_video_admin", "FILLER", filler_video_admin_index_path %></li>
+        <li><%=link_to_unless params[:controller] == "youtube_upload_admin", "YOUTUBE", youtube_upload_admin_index_path %></li>
+        <% if !current_user.nil? %>
+          <% if current_user.admin %>
+            <li><%=link_to_unless params[:controller] == "users", "USER", users_path %></li>
+          <% end %>
+          <li><%=link_to "LOG OUT", "/logout" %></li>
+        <% end %>
       </ul>
     </div>
     <div style="clear: both;"></div>

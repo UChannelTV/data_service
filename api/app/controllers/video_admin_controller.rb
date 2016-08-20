@@ -10,7 +10,6 @@ class VideoAdminController < AdminController
     @status = nil if @status.eql?("全部")
     
     @records = Video._find(@category, @status, @limit).collect{|x| convert(x)}
-    puts @records.size
 
     @category = "全部" if @category.nil?
     @status = "全部" if @status.nil?

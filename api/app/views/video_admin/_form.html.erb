@@ -16,6 +16,7 @@
       <tr><td>Status</td><td><%= select_tag "status" ,options_from_collection_for_select(VideoStatus.all, "status", "status", @record["status"]) %></td></tr>
       <tr><td>Video URL</td><td><%= text_field_tag "video_url", @record["video_url"], :size=>"50", :maxlength=>"254" %></td></tr>
       <tr><td>Parent Video</td><td><%= text_field_tag "parent_video", @record["parent_video"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Thumbnail URL</td><td><%= text_field_tag "thumbnail", @record["thumbnail"], :size=>"50", :maxlength=>"254" %></td></tr>
       <tr><td>Other</td><td><%= text_field_tag "other", @record["other"], :size=>"50", :maxlength=>"254" %></td></tr>
     </tbody>
   </table>

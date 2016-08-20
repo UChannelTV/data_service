@@ -30,9 +30,9 @@
       <tr><td>Upload Status</td><td><%= @record["upload_status"] %></td></tr>
       <tr><td>Privacy Status</td><td><%= @record["privacy_status"] %></td></tr>
       <tr><td>Embeddable</td><td><%= @record["embeddable"] %></td></tr>
-      <tr><td>Thumbnail Small</td><td><img src='<%= @record["thumbnail_small"] %>'/></td></tr>
-      <tr><td>Thumbnail Medium</td><td><img src='<%= @record["thumbnail_medium"] %>'/></td></tr>
-      <tr><td>Thumbnail Large</td><td><img src='<%= @record["thumbnail_large"] %>'/></td></tr>
+      <tr><td>Thumbnail Small</td><td><%= image_tag(@record["thumbnail_small"]) %></td></tr>
+      <tr><td>Thumbnail Medium</td><td><%= image_tag(@record["thumbnail_medium"]) %></td></tr>
+      <tr><td>Thumbnail Large</td><td><%= image_tag(@record["thumbnail_large"]) %></td></tr>
     </tbody>
   </table>
 

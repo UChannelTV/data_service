@@ -10,7 +10,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.external_params(params)
-    retVal = params.permit(:duration, :title, :description, :video_url, :other, :created_at, :parent_video)
+    retVal = params.permit(:duration, :title, :description, :video_url, :other, :created_at, :parent_video, :thumbnail)
     retVal["tags"] = params[:tags]
 
     if retVal["tags"].nil? 
@@ -36,7 +36,7 @@ class Video < ActiveRecord::Base
   end
 
   def self._find(category, status, limit)
-    return order(created_at: :desc).limit(limit) if category.nil? && status.nil?
+    return order(id: :desc).limit(limit) if category.nil? && status.nil?
     cat_id, s_id = nil, nil
      
     if !category.nil?
@@ -51,8 +51,8 @@ class Video < ActiveRecord::Base
       s_id = st.id
     end
 
-    return where(status_id: s_id).order(created_at: :desc).limit(limit) if cat_id.nil?
-    return where(category_id: cat_id).order(created_at: :desc).limit(limit) if s_id.nil?
-    return where(category_id: cat_id).where(status_id: s_id).order(created_at: :desc).limit(limit)
+    return where(status_id: s_id).order(id: :desc).limit(limit) if cat_id.nil?
+    return where(category_id: cat_id).order(id: :desc).limit(limit) if s_id.nil?
+    return where(category_id: cat_id).where(status_id: s_id).order(id: :desc).limit(limit)
   end
 end

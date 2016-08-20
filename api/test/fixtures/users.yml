@@ -1,0 +1,22 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  password_digest: MyString
+  admin: false
+
+two:
+  name: test2
+  password_digest: $2a$10$DrKOHO4YlFMY6S8Q/2R0YuP0rXXdSrCTbNqxrjJWj0h3KLNE/hMPK
+  admin: true
+
+test1:
+  name: MyString3
+  password_digest: MyString
+  admin: true
+
+test2:
+  name: MyString4
+  password_digest: MyString
+  admin: false
+

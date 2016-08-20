@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class VideoUploadsControllerTest < ActionController::TestCase
+  setup do
+    session[:user_id] = users(:two).id
+  end
+
   test "get index" do
     target = [video_uploads(:one), video_uploads(:two)]
     get :index, {video_id: target[0].video_id}

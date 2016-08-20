@@ -38,8 +38,8 @@ module GoogleAPI
 
   class YoutubeAPI
     @@url = "https://www.googleapis.com/youtube/v3/"
-    def self.getVideoIds(token, pageToken, logger)
-      url = @@url + "playlistItems?part=contentDetails&maxResults=50&order=date&playlistId=" + ENV['UCHANNEL_YOUTUBE_UPLOAD_PLAYLIST']
+    def self.getVideoIds(playListId, token, pageToken, logger)
+      url = @@url + "playlistItems?part=contentDetails&maxResults=50&order=date&playlistId=" + playListId
       url += "&pageToken=" + pageToken if !pageToken.nil?
       logger.debug("Collect youtube video " + url)
       header = {'Authorization' => 'Bearer ' + token}
@@ -59,8 +59,8 @@ module GoogleAPI
       return [nil, nil]
     end
 
-    def self.searchUChannelVideo(token, pageToken, before, logger)
-      url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=#{ENV['UCHANNEL_YOUTUBE_CHANNEL_ID']}&maxResults=50"
+    def self.searchUChannelVideo(playListId, token, pageToken, before, logger)
+      url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=#{playListId}&maxResults=50"
       url += "&pageToken=" + pageToken if !pageToken.nil?
       url += "&publishedBefore=" + before.gsub(":", "%3A") if !before.nil?
       #logger.debug("Search youtube video " + url)

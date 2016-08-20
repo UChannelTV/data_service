@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class VideoCategoriesControllerTest < ActionController::TestCase
+  setup do
+    session[:user_id] = users(:two).id
+  end
+
   test "get index" do
     get :index
     assert_response :success

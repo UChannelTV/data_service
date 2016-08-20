@@ -1,0 +1,28 @@
+<h2>Edit User</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %> 
+  <%= form_tag(@url, method: @method) do %>
+    <table id='users' class="display display_only">
+      <thead>
+        <tr>
+          <th align="left">Field</th>
+          <th align="left">Value</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr><td>Name</td><td><%= @record["name"] %></td></tr>
+        <tr><td>Admin</td><td><%= check_box_tag "admin", '1', @record["admin"] %></td></tr>
+      </tbody>
+    </table>
+    <br/>
+    <div class="actions">
+      <%= submit_tag %>
+    </div>
+  <% end %>
+  <p/>
+  <p/>
+  <%= link_to 'Show', action: 'show', id: @record["id"] %>
+<% end %>

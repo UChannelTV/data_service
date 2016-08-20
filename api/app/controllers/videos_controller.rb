@@ -1,4 +1,5 @@
 class VideosController < ApiController
+  skip_before_filter :authenticate, :only => [:formatted, :category]
   @@query = "left join video_uploads on videos.id = video_id and host = 'youtube' and enabled = 1"
 
   def initialize
