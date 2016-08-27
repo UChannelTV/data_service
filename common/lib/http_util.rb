@@ -2,44 +2,32 @@ require 'net/http'
 require 'uri'
 
 module HttpUtil
-  def self.initHttp(uri, use_ssl)
+  def self.initHttp(uri)
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true if use_ssl
+    http.use_ssl = true if uri.scheme == 'https'
     return http
   end
 
-  def self.post(url, header, body, use_ssl=false)
+  def self.post(url, header, body)
     uri = URI.parse(url)
-    http = initHttp(uri, use_ssl)
+    http = initHttp(uri)
     req = Net::HTTP::Post.new(uri, initheader = header)
     req.body = body
     return http.request(req)
   end
 
-  def self.https_post(url, header, body)
-    return post(url, header, body, true)
-  end
-
-  def self.get(url, header, use_ssl=false)
+  def self.get(url, header)
     uri = URI.parse(url)
-    http = initHttp(uri, use_ssl)
+    http = initHttp(uri)
     req = Net::HTTP::Get.new(uri, initheader = header)
     return http.request(req)
   end
 
-  def self.https_get(url, header)
-    return get(url, header, true)
-  end
-
-  def self.put(url, header, body, use_ssl=false)
+  def self.put(url, header, body)
     uri = URI.parse(url)
-    http = initHttp(uri, use_ssl)
+    http = initHttp(uri)
     req = Net::HTTP::Put.new(uri, initheader = header)
     req.body = body
     return http.request(req)
-  end
-
-  def self.https_put(url, header, body)
-    return put(url, header, body, true)
   end
 end

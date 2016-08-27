@@ -1,23 +1,6 @@
-<h2>Log In</h2>
-
-<div style='font-size:16px'>
-<% if !notice.nil? %>
-<p id="notice"><%= notice %></p>
-<% end %>
+<h2>Login</h2>
 <br/>
-
-<%= form_tag sessions_path, method: :post do %>
-  <div>
-    <%= label_tag :name %>
-    <%= text_field_tag :name %>
-  </div>
-  <br/>
-
-  <div>
-    <%= label_tag :password %>
-    <%= password_field_tag :password %>
-  </div>
-  <br/>
-
-  <%= submit_tag 'Log In' %>
+<%= form_tag "/auth/google" do %>
+<%= submit_tag "Google", style: "font-size:30px" %>
 <% end %>
+</div>

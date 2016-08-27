@@ -20,16 +20,10 @@ class SessionsControllerTest < ActionController::TestCase
   test "post create" do
     target = users(:two)
     
-    post :create, {"name" => "test2", "password" => ""}
+    post :create, {"name" => "test2"}
     assert_response :success
     assert_template :new
     assert_nil session[:user_id]
     assert_not_nil flash[:notice]
-
-    post :create, {"name" => "test2", "password" => "test2"}
-    assert_equal "302", @response.code    
-    assert_redirected_to root_path
-    assert_equal target.id, session[:user_id]
-    assert_nil flash[:notice]
   end
 end

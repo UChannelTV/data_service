@@ -35,7 +35,9 @@
       <ul>
         <% if ! ["sessions"].include?(params[:controller]) %>
           <li><%=link_to_unless_current "LIST", {action: "index"} %></li>
-          <li><%=link_to_unless_current "NEW", {action: "new"} %></li>
+          <% if ! ["users"].include?(params[:controller]) %>
+            <li><%=link_to_unless_current "NEW", {action: "new"} %></li>
+          <% end %>
           <% if params[:controller] == "filler_video_admin" %>
             <li><%=link_to_unless_current "SEARCH", {controller: "filler_video_admin", action: "match_search"} %></li>
           <% end %>

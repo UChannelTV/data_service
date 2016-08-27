@@ -13,46 +13,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_nil flash[:notice]
   end
   
-  test "get new" do
-    get :new
-    assert_response :success
-    
-    assert_not_nil assigns(:record)
-    assert_not_nil assigns(:url)
-    assert_nil flash[:notice]
-  end
-
-  test "delete destroy" do
-    target = users(:test2)
-    delete :destroy, id: target.id
-    assert_redirected_to action: "index"
-    assert_not_nil flash[:notice]
-    assert flash[:notice].include?("delete")
-    
-    delete :destroy, id: target.id
-    assert_redirected_to action: "index"
-    assert_not_nil flash[:notice]
-    assert_not flash[:notice].include?("delete")
-  end
-
-  test "post create" do
-    target = users(:test2)
-    delete :destroy, id: target.id
-
-    cat = {"name" => "", "password": "MyString", "admin": false} 
-    createFail(cat)
-    cat = {"name" => target.name, "password": "", "admin": false} 
-    createFail(cat)
-   
-    cat = {"name" => target.name, "password": "MyString" , "admin": false}    
-
-    post :create, cat
-    assert_response :success
-    assert_template :show
-    assert_not_nil assigns(:record)
-    assert_not_nil flash[:notice]
-  end
-
   test "get show" do
     get :show, id: users(:one).id
     assert_response :success
@@ -85,12 +45,4 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns[:record]
     assert_template :show
   end
-  
-  def createFail(user)
-    post :create, user
-    assert_response :success
-    assert_template :new
-    assert_not_nil assigns(:record)
-    assert_not_nil flash[:notice]
-  end
-end
+end 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/auth/google/callback', to: 'sessions#create'
+
   use_doorkeeper do
     # it accepts :authorizations, :tokens, :applications and :authorized_applications
     controllers :applications => 'oauth_applications'
@@ -62,7 +64,7 @@ Rails.application.routes.draw do
     resources :video_upload_admin
   end
 
-  resources :users
+  resources :users, only: [:index, :show, :edit, :update]
   resources :sessions, only: [:new, :create]
   resources :heartbeat, only: [:index]
   get '/logout' => 'sessions#destroy'

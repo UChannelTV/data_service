@@ -7,7 +7,6 @@
       <th align="left">ID</th>
       <th align="left">Name</th>
       <th align="left">Admin</th>
-      <th align="left">Action</th>
     </tr>
   </thead>
 
@@ -17,7 +16,6 @@
         <td><%= link_to user["id"], action: 'show', id: user["id"] %></td>
         <td><%= user["name"] %></td>
         <td><%= user["admin"] %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: user["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

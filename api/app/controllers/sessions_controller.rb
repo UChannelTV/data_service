@@ -5,14 +5,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(name: params[:name])
-    if @user && @user.authenticate(params[:password])
+    begin
+      @user = User.from_omniauth(request.env['omniauth.auth'])
       session[:user_id] = @user.id
       flash.delete(:notice)
       redirect_to root_path
-    else
+    rescue
       session.delete(:user_id)
-      flash[:notice] = "You have entered incorrect name and/or password."
+      flash[:notice] = "There was an error while trying to authenticate you..."
       render :new
     end
   end

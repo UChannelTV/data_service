@@ -7,9 +7,10 @@ require 'set'
 module YoutubeTools
   class VideoCollector
     def initialize(host, logger)
-      @url = "http://#{host}/api/v1.0/youtube_uploads"
-      @uploadUrl =  "http://#{host}/api/v1.0/video_uploads" 
+      @url = host + "/api/v1.0/youtube_uploads"
+      @uploadUrl = host + "/api/v1.0/video_uploads" 
       @logger, @token, @expired_at = logger, nil, 0
+      #@youtube_playlist_ids = ["UUJ1vOPpLL48N6qV2noUVouA"]
       @youtube_playlist_ids = ["UUta0SK2fns_-Up9NsAAqZVA", "UU9QotuR3RBijf3UHBs5Jdew"]
       @uchannel_api = UChannelAPI::API.new(host, logger)
       @converter = VideoConverter.new(@uchannel_api, host, logger)
@@ -44,11 +45,9 @@ module YoutubeTools
             HttpUtil.post(@url, @uchannel_api.getHeader, info.to_json)
             HttpUtil.post(@uploadUrl, @uchannel_api.getHeader, {"video_id" => -1, "host" => "youtube", "host_id" => info["youtube_id"]}.to_json)
             @converter.save(info)
-            break
           end
         end
 
-        break
         puts newVids.size
         break if pageToken.nil?
         break if stopIfNoNew && newVids.size == 0
@@ -74,7 +73,7 @@ module YoutubeTools
   class VideoConverter
     def initialize(api, host, logger)
       @api = api
-      @url = "http://#{host}/api/v1.0/"
+      @url = host + "/api/v1.0/"
       @logger = logger
 
       res = HttpUtil.get(@url + "video_categories", @api.getHeader)
@@ -185,7 +184,12 @@ module YoutubeTools
     def save(info)
       body = getVideoInfo(info).to_json
       res = HttpUtil.post(@url + "videos", @api.getHeader, body)
-      raise "Failed to create video " + res.body if !res.kind_of? Net::HTTPSuccess
+      if !res.kind_of? Net::HTTPSuccess
+        @logger.error("Failed to create video " + res.body)
+        puts info["youtube_id"]
+        return
+      end
+
       tb = JSON.parse(res.body)
       puts tb["id"]
 

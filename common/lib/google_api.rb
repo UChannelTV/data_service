@@ -24,7 +24,7 @@ module GoogleAPI
       header = {'Content-Type' => 'application/x-www-form-urlencoded'}
       body = "client_id=#{ENV["GOOGLE_API_CLIENT_ID"]}&client_secret=#{ENV['GOOGLE_API_CLIENT_SECRET']}&" +
           "refresh_token=#{ENV['GOOGLE_API_REFRESH_TOKEN']}&grant_type=refresh_token"
-      res = HttpUtil.https_post(url, header, body)
+      res = HttpUtil.post(url, header, body)
       if res.kind_of? Net::HTTPSuccess
         info = JSON.parse(res.body)
         return [info["access_token"], info["expires_in"]]
@@ -43,7 +43,7 @@ module GoogleAPI
       url += "&pageToken=" + pageToken if !pageToken.nil?
       logger.debug("Collect youtube video " + url)
       header = {'Authorization' => 'Bearer ' + token}
-      res = HttpUtil.https_get(url, header)
+      res = HttpUtil.get(url, header)
       if res.kind_of? Net::HTTPSuccess
         info = JSON.parse(res.body)
         pageToken = info["nextPageToken"]
@@ -65,7 +65,7 @@ module GoogleAPI
       url += "&publishedBefore=" + before.gsub(":", "%3A") if !before.nil?
       #logger.debug("Search youtube video " + url)
       header = {'Authorization' => 'Bearer ' + token}
-      res = HttpUtil.https_get(url, header)
+      res = HttpUtil.get(url, header)
       if res.kind_of? Net::HTTPSuccess
         info = JSON.parse(res.body)
         pageToken = info["nextPageToken"]
@@ -124,7 +124,7 @@ module GoogleAPI
       #logger.debug("Get youtube video #{part} " + url)
       header = {'Authorization' => 'Bearer ' + token,
                 'Content-Type' => 'application/x-www-form-urlencoded'}
-      res = HttpUtil.https_get(url, header)
+      res = HttpUtil.get(url, header)
       return JSON.parse(res.body) if res.kind_of? Net::HTTPSuccess
 
       logger.error("Fail to get youtube video #{part}, error code " + res.code)
