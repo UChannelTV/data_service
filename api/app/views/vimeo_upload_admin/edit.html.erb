@@ -1,0 +1,11 @@
+<h2>Edit Vimeo Video</h2>
+
+<p id="notice"><%= notice %></p>
+
+<% if ! @record.nil? %> 
+  <%= render 'form' %>
+
+  <p/>
+  <p/>
+  <%= link_to 'Show', action: 'show', id: @record["vimeo_id"] %>
+<% end %>

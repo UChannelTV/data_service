@@ -8,16 +8,17 @@
     </thead>
 
     <tbody>
-      <tr><td>Title</td><td><%= text_field_tag "title", @record["title"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Title</td><td><%= text_field_tag "title", @record["title"], size: "50", maxlength: "254" %></td></tr>
       <tr><td>Description</td><td><%= text_area_tag "description", @record["description"], cols: "50", rows: "10"%></td></tr>
-      <tr><td>Duration (second)</td><td><%= text_field_tag "duration", @record["duration"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Duration (second)</td><td><%= text_field_tag "duration", @record["duration"], size: "50", maxlength: "254" %></td></tr>
       <tr><td>Tags</td><td><%= text_area_tag "tags", @record["tags"], cols: "50", rows: "3" %></td></tr>
       <tr><td>Category</td><td><%= select_tag "category", options_from_collection_for_select(VideoCategory.all, "name", "name", @record["category"]) %></td></tr>
       <tr><td>Status</td><td><%= select_tag "status" ,options_from_collection_for_select(VideoStatus.all, "status", "status", @record["status"]) %></td></tr>
-      <tr><td>Video URL</td><td><%= text_field_tag "video_url", @record["video_url"], :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Parent Video</td><td><%= text_field_tag "parent_video", @record["parent_video"], :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Thumbnail URL</td><td><%= text_field_tag "thumbnail", @record["thumbnail"], :size=>"50", :maxlength=>"254" %></td></tr>
-      <tr><td>Other</td><td><%= text_field_tag "other", @record["other"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Created At</td><td><%= text_field_tag "created_at" ,@record["created_at"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Video URL</td><td><%= text_field_tag "video_url", @record["video_url"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Parent Video</td><td><%= text_field_tag "parent_video", @record["parent_video"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Thumbnail URL</td><td><%= text_field_tag "thumbnail", @record["thumbnail"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>Other</td><td><%= text_field_tag "other", @record["other"], size: "50", maxlength: "254" %></td></tr>
     </tbody>
   </table>
 

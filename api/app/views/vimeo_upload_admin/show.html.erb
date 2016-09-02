@@ -1,4 +1,4 @@
-<h2>Youtube Video</h2>
+<h2>Vimeo Video</h2>
 
 <p id="notice"><%= notice %></p>
 
@@ -12,8 +12,10 @@
     </thead>
 
     <tbody>
-      <tr><td>Youtube ID</td><td><%= link_to @record["youtube_id"], "https://www.youtube.com/watch?v=" + @record["youtube_id"], target: "_blank" %></td></tr>
+      <tr><td>Vimeo ID</td><td><%= link_to @record["vimeo_id"], "https://vimeo.com/channels/#{@record["channel_id"]}/#{@record["vimeo_id"]}", target: "_blank" %></td></tr>
       <tr><td>Duration</td><td><%= @record["duration"] %></td></tr>
+      <tr><td>Width</td><td><%= @record["width"] %></td></tr>
+      <tr><td>Height</td><td><%= @record["height"] %></td></tr>
       <tr><td>Published At</td><td><%= @record["published_at"] %></td></tr>
       <tr><td>Title</td><td><%= @record["title"] %></td></tr>
       <tr><td>Description</td>
@@ -24,12 +26,10 @@
         </td>
       </tr>
       <tr><td>Tags</td><td><%= @record["tags"] %></td></tr>
-      <tr><td>Category ID</td><td><%= @record["category_id"] %></td></tr>
-      <tr><td>Association</td><td><%= link_to 'View', video_upload_admin_index_path("host" => "youtube", "host_id" => @record["youtube_id"]) %></td></tr>
-      <tr><td>Live Broadcast Content</td><td><%= @record["live_broadcast_content"] %></td></tr>
-      <tr><td>Upload Status</td><td><%= @record["upload_status"] %></td></tr>
-      <tr><td>Privacy Status</td><td><%= @record["privacy_status"] %></td></tr>
-      <tr><td>Embeddable</td><td><%= @record["embeddable"] %></td></tr>
+      <tr><td>Channel ID</td><td><%= @record["category_id"] %></td></tr>
+      <tr><td>Association</td><td><%= link_to 'View', video_upload_admin_index_path("host" => "vimeo", "host_id" => @record["vimeo_id"]) %></td></tr>
+      <tr><td>Embed Privacy</td><td><%= @record["embed_privacy"] %></td></tr>
+      <tr><td>Expired</td><td><%= @record["expired"] %></td></tr>
       <tr><td>Thumbnail Small</td><td><%= image_tag(@record["thumbnail_small"]) %></td></tr>
       <tr><td>Thumbnail Medium</td><td><%= image_tag(@record["thumbnail_medium"]) %></td></tr>
       <tr><td>Thumbnail Large</td><td><%= image_tag(@record["thumbnail_large"]) %></td></tr>
@@ -38,5 +38,5 @@
 
   <br/>
 
-  <%= link_to 'Edit', action: 'edit', id: @record["youtube_id"] %>&nbsp;|&nbsp;<%= link_to 'Add to UChannel', controller: 'video_admin', action: 'new', source: 'youtube', source_id: @record["youtube_id"] %>
+  <%= link_to 'Edit', action: 'edit', id: @record["vimeo_id"] %>&nbsp;|&nbsp;<%= link_to 'Add to UChannel', controller: 'video_admin', action: 'new', source: 'vimeo', source_id: @record["vimeo_id"] %>
 <% end %>  

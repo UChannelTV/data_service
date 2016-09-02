@@ -19,7 +19,7 @@
         <td><%= link_to upload["id"], action: 'show', id: upload["id"] %></td>
         <td><%= link_to upload["video_id"], {controller: 'video_admin', action: 'show', id: upload["video_id"]} %></td>
         <td><%= upload["host"] %></td>
-        <td><%= link_to upload["host_id"], {controller: 'youtube_upload_admin', action: 'show', id: upload["host_id"]} %></td>
+        <td><%= link_to upload["host_id"], {controller: "#{upload["host"]}_upload_admin", action: 'show', id: upload["host_id"]} %></td>
         <td><%= upload["enabled"] %></td>
         <td><%= link_to 'Delete', {action: 'destroy', id: upload["id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
       </tr>

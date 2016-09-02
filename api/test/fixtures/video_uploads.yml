@@ -2,24 +2,24 @@
 
 one:
   video_id: 1
-  host: MyString
+  host: youtube
   host_id: MyString
   enabled: true
 
 two:
   video_id: 1
-  host: MyString
+  host: youtube
   host_id: MyString2
   enabled: false
 
 test1:
   video_id: 2
-  host: MyString
+  host: youtube
   host_id: MyString3
   enabled: true
 
 test2:
   video_id: 2
-  host: MyString
+  host: youtube
   host_id: MyString4
 

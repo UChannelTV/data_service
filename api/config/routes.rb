@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     resources :videos
     resources :filler_videos
     resources :youtube_uploads
+    resources :vimeo_uploads
     resources :video_categories
   end
 
@@ -51,6 +52,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :vimeo_upload_admin do
+      collection do
+        post :index
+      end
+    end
+
     resources :video_admin do
       collection do
         post :index
@@ -60,6 +67,7 @@ Rails.application.routes.draw do
     resources :video_admin
     resources :filler_video_admin
     resources :youtube_upload_admin
+    resources :vimeo_upload_admin
     resources :video_category_admin
     resources :video_upload_admin
   end

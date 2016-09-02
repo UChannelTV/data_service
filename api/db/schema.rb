@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160820190931) do
+ActiveRecord::Schema.define(version: 20160828234426) do
 
   create_table "filler_videos", force: :cascade do |t|
     t.string   "name",       limit: 255,                 null: false
@@ -70,10 +70,10 @@ ActiveRecord::Schema.define(version: 20160820190931) do
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 255
+    t.string   "name",       limit: 255
     t.boolean  "admin"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "users", ["name"], name: "index_users_on_name", using: :btree
@@ -124,6 +124,29 @@ ActiveRecord::Schema.define(version: 20160820190931) do
   add_index "videos", ["created_at"], name: "index_videos_on_created_at", using: :btree
   add_index "videos", ["status_id"], name: "index_videos_on_status_id", using: :btree
   add_index "videos", ["title", "category_id"], name: "index_videos_on_title_and_category_id", unique: true, using: :btree
+
+  create_table "vimeo_uploads", id: false, force: :cascade do |t|
+    t.string   "vimeo_id",         limit: 255
+    t.integer  "duration",         limit: 4
+    t.datetime "published_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.string   "title",            limit: 255
+    t.text     "description",      limit: 65535
+    t.string   "thumbnail_small",  limit: 255
+    t.string   "thumbnail_medium", limit: 255
+    t.string   "thumbnail_large",  limit: 255
+    t.text     "tags",             limit: 65535
+    t.integer  "width",            limit: 4
+    t.integer  "height",           limit: 4
+    t.string   "embed_privacy",    limit: 255
+    t.string   "channel_id",       limit: 255
+    t.boolean  "expired",                        default: false
+  end
+
+  add_index "vimeo_uploads", ["channel_id"], name: "index_vimeo_uploads_on_channel_id", using: :btree
+  add_index "vimeo_uploads", ["published_at"], name: "index_vimeo_uploads_on_published_at", using: :btree
+  add_index "vimeo_uploads", ["vimeo_id"], name: "index_vimeo_uploads_on_vimeo_id", unique: true, using: :btree
 
   create_table "youtube_uploads", id: false, force: :cascade do |t|
     t.string   "youtube_id",             limit: 255

@@ -24,6 +24,18 @@ class VideoAdminController < AdminController
     @statuses << allS
   end
 
+  def new
+    super
+    host, host_id = params[:source], params[:source_id]
+    record = nil
+    if host == "vimeo"
+      record, msg, code = ModelHandler.new(VimeoUpload).find(host_id)
+    elsif host == "youtube"
+      record, msg, code = ModelHandler.new(YoutubeUpload).find(host_id)
+    end
+    @record = record.toUChannelVideo if !record.nil?
+  end
+
   def convert(record)
     retVal = super(record)
     retVal["tags"] = retVal["tags"].join(",") if !retVal.nil?

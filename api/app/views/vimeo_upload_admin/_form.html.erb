@@ -1,0 +1,32 @@
+<%= form_tag(@url, method: @method) do %>
+  <table id='video_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Vimeo ID</td><td><%= text_field_tag "vimeo_id", @record["vimeo_id"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Duration (second)</td><td><%= text_field_tag "duration", @record["duration"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Width</td><td><%= text_field_tag "width", @record["width"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Height</td><td><%= text_field_tag "height", @record["height"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Published At</td><td><%= text_field_tag "published_at", @record["published_at"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Title</td><td><%= text_field_tag "title", @record["title"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Description</td><td><%= text_area_tag "description", @record["description"], cols: "50", rows: "5"%></td></tr>
+      <tr><td>Thumbnail Small</td><td><%= text_field_tag "thumbinal_small", @record["thumbnail_small"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Thumbnail Medium</td><td><%= text_field_tag "thumbnail_medium", @record["thumbnail_medium"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Thumbnail Large</td><td><%= text_field_tag "thumbnail_large", @record["thumbnail_large"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Tags</td><td><%= text_area_tag "tags", @record["tags"], cols: "50", rows: "3" %></td></tr>
+      <tr><td>Channel ID</td><td><%= text_field_tag "category_id", @record["category_id"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Embed Privacy</td><td><%= text_field_tag "embed_privacy", @record["embed_privacy"], :size=>"50", :maxlength=>"254" %></td></tr>
+      <tr><td>Expired</td><td><%= check_box_tag "expired", '1', @record["expired"] %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

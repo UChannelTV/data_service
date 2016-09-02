@@ -1,6 +1,6 @@
 require_relative './google_api'
 require_relative './http_util'
-require_relative './uchannel_api'
+require_relative './uchannel_tools'
 require 'time'
 require 'set'
 
@@ -12,7 +12,7 @@ module YoutubeTools
       @logger, @token, @expired_at = logger, nil, 0
       #@youtube_playlist_ids = ["UUJ1vOPpLL48N6qV2noUVouA"]
       @youtube_playlist_ids = ["UUta0SK2fns_-Up9NsAAqZVA", "UU9QotuR3RBijf3UHBs5Jdew"]
-      @uchannel_api = UChannelAPI::API.new(host, logger)
+      @uchannel_api = UChannelTool::API.new(host, logger)
       @converter = VideoConverter.new(@uchannel_api, host, logger)
     end
 
@@ -42,9 +42,13 @@ module YoutubeTools
           updateToken
           videos = GoogleAPI::YoutubeAPI.getVideoInfo(@token, newVids, @logger)
           videos.each do |vid, info|
-            HttpUtil.post(@url, @uchannel_api.getHeader, info.to_json)
-            HttpUtil.post(@uploadUrl, @uchannel_api.getHeader, {"video_id" => -1, "host" => "youtube", "host_id" => info["youtube_id"]}.to_json)
-            @converter.save(info)
+            res = HttpUtil.post(@url, @uchannel_api.getHeader, info.to_json)
+            if !res.kind_of? Net::HTTPSuccess
+              @logger.error("Failed to create youtube video " + res.body)
+            else
+              HttpUtil.post(@uploadUrl, @uchannel_api.getHeader, {"video_id" => -1, "host" => "youtube", "host_id" => info["youtube_id"]}.to_json)
+              @converter.save(info)
+            end
           end
         end
 
@@ -114,64 +118,7 @@ module YoutubeTools
     def getVideoInfo(info)
       category = getCategory(info)
       {"duration" => info["duration"],
-       "title" => info["title"].gsub("_", " ").
-           gsub("UChannel 1.9", "").
-           gsub("U Channel 1.9", "").
-           gsub("UChannel1.9", "").
-           gsub("U Channel 1 9", "").
-           gsub("UChannelTV", "").
-           gsub("UChennelTV", "").
-           gsub("UChannel TV", "").
-           gsub("UchannelTV", "").
-           gsub("優視頻道", "").
-           gsub("優視" + category, "").
-           gsub("FocusNews", "").
-           gsub("Focus News", "").
-           gsub("News Focus", "").
-           gsub("News Topic", "").
-           gsub("財經趨勢", "").
-           gsub("Financial Trend", "").
-           gsub("Finance Focus", "").
-           gsub("Focus Finance", "").
-           gsub("FocusFinance", "").
-           gsub("Weekly Announcement", "").
-           gsub("Announcement Weekly", "").
-           gsub("Community News", "").
-           gsub("Bay Area News", "").
-           gsub("U Travel", "").
-           gsub("UTravel", "").
-           gsub("U旅遊", "").
-           gsub("灣 區 資 訊 站", "").
-           gsub("灣區資訊站", "").
-           gsub("Popcorn Theater", "").
-           gsub("爆米花電影院", "").
-           gsub("U 廚房 Kitchen", "").
-           gsub("U 廚房", "").
-           gsub("U Kitchen", "").
-           gsub("星馬泰系列", "").
-           gsub("社區看板", "").
-           gsub("矽谷龍門陣", "").
-           gsub("U 體育", "").
-           gsub("U體育", "").
-           gsub("U Sport", "").
-           gsub("U 音樂", "").
-           gsub("U Music", "").
-           gsub("UMusic", "").
-           gsub("優視體育綜合報導", "").
-           gsub("生活萬花筒", "").
-           gsub("優視社區活動看板", "").
-           gsub("優勢社區活動看板", "").
-           gsub("Weekly Bulletin", "").
-           gsub("｜", " ").
-           gsub("UChannel Bulletin", "").
-           gsub("「親子電影站」", "").
-           gsub("原創短片", "").
-           gsub("原創紀錄片系列", "").
-           gsub(/(^短片 )/, "").
-           gsub("＿", " ").
-           gsub("|", " ").
-           gsub("：", " ").
-           gsub(/ +/, " ").strip,
+       "title" => UChannelTool::Content.normalizeTitle(info["title"], category),
        "description" => info["description"],
        "tags" => info["tags"],
        "category" => category,
@@ -187,22 +134,21 @@ module YoutubeTools
       if !res.kind_of? Net::HTTPSuccess
         @logger.error("Failed to create video " + res.body)
         puts info["youtube_id"]
-        return
+      else
+        tb = JSON.parse(res.body)
+        puts tb["id"]
+      
+        body = {
+          "video_id" => tb["id"],
+          "host" => "youtube",
+          "host_id" => info["youtube_id"]
+        }.to_json
+        res = HttpUtil.put(@url + "video_uploads/video", @api.getHeader, body) 
+        raise "Failed to set video ID " + res.body if !res.kind_of? Net::HTTPSuccess
+
+        res = HttpUtil.put(@url + "video_uploads/enable", @api.getHeader, body) 
+        raise "Failed to enable uploads " + res.body if !res.kind_of? Net::HTTPSuccess
       end
-
-      tb = JSON.parse(res.body)
-      puts tb["id"]
-
-      body = {
-        "video_id" => tb["id"],
-        "host" => "youtube",
-        "host_id" => info["youtube_id"]
-      }.to_json
-      res = HttpUtil.put(@url + "video_uploads/video", @api.getHeader, body) 
-      raise "Failed to set video ID " + res.body if !res.kind_of? Net::HTTPSuccess
-
-      res = HttpUtil.put(@url + "video_uploads/enable", @api.getHeader, body) 
-      raise "Failed to enable uploads " + res.body if !res.kind_of? Net::HTTPSuccess
     end
 
     def run(numVideos)

@@ -1,4 +1,4 @@
-<h2>Youtube Video</h2>
+<h2>Vimeo Video</h2>
 <p id="notice"><%= notice %></p>
 <br/>
 
@@ -28,11 +28,10 @@
 <table id='videos_list' class="display data_full">
   <thead>
     <tr>
-      <th align="left">Youtube ID</th>
+      <th align="left">Vimeo ID</th>
       <th align="left">Title</th>
       <th align="left">Published At</th>
-      <th align="left">Upload Statue</th>
-      <th align="left">Privacy Status</th>
+      <th align="left">Expired</th>
       <th align="left">Association</th>
       <th align="left">Action</th>
     </tr>
@@ -41,13 +40,12 @@
   <tbody>
     <% @records.each do |video| %>
       <tr>
-        <td><%= link_to video["youtube_id"], "https://www.youtube.com/watch?v=" + video["youtube_id"], target: "_blank" %></td>
-        <td><%= link_to video["title"], {action: 'show', id: video["youtube_id"]} %></td>
+        <td><%= link_to video["vimeo_id"], "https://vimeo.com/channels/#{video["channel_id"]}/#{video["vimeo_id"]}", target: "_blank" %></td>
+        <td><%= link_to video["title"], {action: 'show', id: video["vimeo_id"]} %></td>
         <td><%= video["published_at"] %></td>
-        <td><%= video["upload_status"] %></td>
-        <td><%= video["privacy_status"] %></td>
-        <td><%= link_to 'View', video_upload_admin_index_path("host" => "youtube", "host_id" => video["youtube_id"]) %></td>
-        <td><%= link_to 'Delete', {action: 'destroy', id: video["youtube_id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
+        <td><%= video["expired"] %></td>
+        <td><%= link_to 'View', video_upload_admin_index_path("host" => "vimeo", "host_id" => video["vimeo_id"]) %></td>
+        <td><%= link_to 'Delete', {action: 'destroy', id: video["vimeo_id"]}, method: 'delete', data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
