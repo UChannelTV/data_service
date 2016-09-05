@@ -1,6 +1,6 @@
 class VideosController < ApiController
-  skip_before_filter :authenticate, :only => [:formatted, :category]
-  @@query = "left join video_uploads on videos.id = video_id and host = 'youtube' and enabled = 1"
+  skip_before_filter :authenticate, :only => [:formatted, :category, :search, :recent_update]
+  @@query = "left join video_uploads on videos.id = video_id and enabled = 1"
 
   def initialize
     super(Video)
@@ -11,15 +11,12 @@ class VideosController < ApiController
   end
 
   def formatted 
-    video = Video.joins(:category).joins(@@query).
-        select("videos.title, videos.description, video_categories.qr_code, video_uploads.host_id").
-        where(id: params[:id]).first
-    if video.nil?
-      video = {}
+    videos = getFormattedVideos(params[:id])
+    if videos.size == 0
+      render json: {}
     else
-      video = {"title" => video.title, "description" => video.description, "qr_code" => video.qr_code, "youtube_id" => video.host_id}
+      render json: videos[0]
     end
-    render json: video
   end
 
   def category
@@ -38,6 +35,46 @@ class VideosController < ApiController
     end
   end
 
+  def search
+    @search = Video.search do
+      fulltext params[:query], {:fields => [:title, :description, :tags, :category]}
+      with :status_id, 2
+      with(:category_id).greater_than(1)
+      with :parent_video, nil
+      order_by :created_at, :desc
+    end
+
+    ids = @search.results.map{|v| v["id"]}
+    videos = []
+    Video.joins(:category).select("videos.id, videos.title, videos.thumbnail, video_categories.name, videos.duration").
+        where(id: ids).order(created_at: :desc).each do |v|
+      videos << {"id" => v.id, "title" => v.title, "category" => v.name, "thumbnail" => v.thumbnail, "duration" => v.duration}
+    end
+    render json: videos
+  end
+
+  def recent_update
+    date = Date.new
+    @search = Video.search do
+      with :status_id, 2 
+      with(:category_id).greater_than(1)
+      with :parent_video, nil
+      with(:created_at).greater_than(DateTime.now - 7.days)
+      order_by :created_at, :desc
+    end
+
+    videos = {}
+    @search.results.each do |v|
+      cat = v["category_id"]
+      next if !videos[cat].nil? && videos[cat][1] > v["created_at"]
+      videos[cat] = [v["id"], v["created_at"]]
+    end
+
+    ids = videos.values.map {|v| v[0]}
+    puts ids.join("\t")
+    render json: getFormattedVideos(ids)
+  end
+
   private
   def getVideos(cid, first_id, limit)
     if first_id == 0
@@ -52,5 +89,23 @@ class VideosController < ApiController
         where("(created_at = '#{video.created_at}' and id <= #{first_id}) || created_at < '#{video.created_at}'").
         select("id, title, thumbnail, duration").order(created_at: :desc, id: :desc).
         limit(limit+1)
+  end
+
+  def getFormattedVideos(ids)
+    videos = {}
+    Video.joins(:category).joins(@@query).select("videos.id, videos.title, videos.description, videos.duration, 
+                                                 videos.thumbnail, video_categories.qr_code, video_categories.name,
+                                                 video_uploads.host, video_uploads.host_id").where(id: ids).each do |v|
+      id = v.id
+      puts v.to_json
+      videos[id] = {"id" => id, "title" => v.title, "description" => v.description, "thumbnail" => v.thumbnail, 
+                    "duration" => v.duration, "qr_code" => v.qr_code, "category" => v.name} if videos[id].nil?
+      if v.host == "youtube"
+        videos[id]["youtube_id"] = v.host_id
+      elsif v.host == "vimeo"
+        video[id]["vimeo_id"] = v.host_id
+      end
+    end
+    videos.values
   end
 end

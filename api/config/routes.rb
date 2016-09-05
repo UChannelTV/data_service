@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   scope 'api/v1.0', defaults: { format: :json } do
     resources :videos do
       collection do
-        get :list_status, :category
+        get :list_status, :category, :search, :recent_update
       end
       member do
         get :formatted
@@ -42,25 +42,26 @@ Rails.application.routes.draw do
     resources :filler_video_admin do
       collection do
         get :match_search
-        post :index, :match_result
+        put :index
+        post :match_result
       end
     end
 
     resources :youtube_upload_admin do
       collection do
-        post :index
+        put :index
       end
     end
 
     resources :vimeo_upload_admin do
       collection do
-        post :index
+        put :index
       end
     end
 
     resources :video_admin do
       collection do
-        post :index
+        put :index
       end
     end
 

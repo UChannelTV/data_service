@@ -13,7 +13,13 @@
 
     <tbody>
       <tr><td>ID</td><td><%= @record["id"] %></td></tr>
-      <tr><td>Video ID</td><td><%= link_to @record["video_id"], {controller: 'video_admin', action: 'show', id: @record["video_id"]} %></td></tr>
+      <tr><td>Video ID</td><td>
+      <% if @record["video_id"] > 0 %>
+        <%= link_to @record["video_id"], {controller: 'video_admin', action: 'show', id: @record["video_id"]} %>
+      <% else %>
+        <%= @record["video_id"] %>
+      <% end %>
+      </td></tr>
       <tr><td>Host</td><td><%= @record["host"] %></td></tr>
       <tr><td>Host ID</td><td><%= link_to @record["host_id"], {controller: "#{@record["host"]}_upload_admin", action: 'show', id: @record["host_id"]} %></td></tr>
       <tr><td>Enabled</td><td><%= @record["enabled"] %></td></tr>

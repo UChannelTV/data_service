@@ -38,7 +38,12 @@ gem 'mysql2'
 
 gem 'rails_12factor', group: :production
 
+#oauth2
 gem 'omniauth-google-oauth2'
+
+#search
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 
 # Use ActiveModel Serializers for render JSON
 gem "active_model_serializers"

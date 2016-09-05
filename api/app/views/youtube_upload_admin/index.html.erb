@@ -3,7 +3,7 @@
 <br/>
 
 <h3>Query</h3>
-<%= form_tag do %>
+<%= form_tag({}, {:method => "PUT"}) do %>
   <table id='list_query' class="display display_only">
     <thead>
       <tr>
@@ -19,7 +19,7 @@
 
   <p/>
   <div class="actions">
-    <%= submit_tag 'Submit' %>
+    <%= submit_tag 'Update' %>
   </div>
 <% end %>
 
