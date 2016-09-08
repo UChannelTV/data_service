@@ -71,8 +71,20 @@ class VideosController < ApiController
     end
 
     ids = videos.values.map {|v| v[0]}
-    puts ids.join("\t")
     render json: getFormattedVideos(ids)
+  end
+
+  def all_videos
+    @search = Video.search do
+      fulltext '', {:fields => [:title]}
+      with :status_id, 2
+      with(:category_id).greater_than(1)
+      with :parent_video, nil
+      order_by :created_at, :desc
+      paginate :page => 1, :per_page => 10000
+    end
+
+    render json: @search.results.map{|v| v["id"]}
   end
 
   private
@@ -93,17 +105,17 @@ class VideosController < ApiController
 
   def getFormattedVideos(ids)
     videos = {}
-    Video.joins(:category).joins(@@query).select("videos.id, videos.title, videos.description, videos.duration, 
+    Video.joins(:category).joins(@@query).select("videos.id, videos.title, videos.description, videos.duration, videos.tags, 
                                                  videos.thumbnail, video_categories.qr_code, video_categories.name,
-                                                 video_uploads.host, video_uploads.host_id").where(id: ids).each do |v|
+                                                 video_uploads.host, video_uploads.host_id").
+        where(id: ids).where(status_id: 2).where(parent_video: nil).order(created_at: :desc).each do |v|
       id = v.id
-      puts v.to_json
       videos[id] = {"id" => id, "title" => v.title, "description" => v.description, "thumbnail" => v.thumbnail, 
-                    "duration" => v.duration, "qr_code" => v.qr_code, "category" => v.name} if videos[id].nil?
+                    "duration" => v.duration, "qr_code" => v.qr_code, "category" => v.name, "tags" => JSON.parse(v.tags)} if videos[id].nil?
       if v.host == "youtube"
         videos[id]["youtube_id"] = v.host_id
       elsif v.host == "vimeo"
-        video[id]["vimeo_id"] = v.host_id
+        videos[id]["vimeo_id"] = v.host_id
       end
     end
     videos.values

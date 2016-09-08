@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   scope 'api/v1.0', defaults: { format: :json } do
     resources :videos do
       collection do
-        get :list_status, :category, :search, :recent_update
+        get :list_status, :category, :search, :recent_update, :all_videos
       end
       member do
         get :formatted
