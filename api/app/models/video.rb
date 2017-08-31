@@ -55,17 +55,4 @@ class Video < ActiveRecord::Base
     return where(category_id: cat_id).order(id: :desc).limit(limit) if s_id.nil?
     return where(category_id: cat_id).where(status_id: s_id).order(id: :desc).limit(limit)
   end
-
-  searchable do
-    text :title, boost: 10
-    text :description
-    text :tags
-    text :category do
-      category.name 
-    end
-    time :created_at
-    integer :category_id
-    integer :status_id
-    integer :parent_video
-  end
 end

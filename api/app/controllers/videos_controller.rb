@@ -59,7 +59,7 @@ class VideosController < ApiController
       with :status_id, 2 
       with(:category_id).greater_than(1)
       with :parent_video, nil
-      with(:created_at).greater_than(DateTime.now - 7.days)
+      with(:created_at).greater_than(DateTime.now - 10.days)
       order_by :created_at, :desc
     end
 
