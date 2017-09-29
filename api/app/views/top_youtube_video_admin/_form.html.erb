@@ -1,0 +1,21 @@
+<%= form_tag(@url, method: @method) do |f| %>
+  <table id='category_info' class="display display_only">
+    <thead>
+      <tr>
+        <th align="left">Field</th>
+        <th align="left">Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr><td>Category</td><td><%= text_field_tag "name", @record["name"], size: "50", maxlength: "254"%></td></tr>
+      <tr><td>English Name</td><td><%= text_field_tag "english_name", @record["english_name"], size: "50", maxlength: "254" %></td></tr>
+      <tr><td>QR Code</td><td><%= text_field_tag "qr_code", @record["qr_code"], size: "50", maxlength: "254" %></td></tr>
+    </tbody>
+  </table>
+
+  <p/>
+  <div class="actions">
+    <%= submit_tag %>
+  </div>
+<% end %>

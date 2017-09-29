@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828234426) do
+ActiveRecord::Schema.define(version: 20170928234426) do
+
+  create_table "active_labels", id: false, force: :cascade do |t|
+    t.string   "task",       limit: 255
+    t.string   "label",      limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "active_labels", ["task"], name: "index_active_labels_on_task", unique: true, using: :btree
 
   create_table "filler_videos", force: :cascade do |t|
     t.string   "name",       limit: 255,                 null: false
@@ -68,6 +77,17 @@ ActiveRecord::Schema.define(version: 20160828234426) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
+  create_table "top_youtube_videos", force: :cascade do |t|
+    t.string   "category_id", limit: 255
+    t.string   "tag",         limit: 255
+    t.text     "youtube_ids", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "top_youtube_videos", ["category_id", "tag", "created_at"], name: "index_top_youtube_videos_on_category_id_and_tag_and_created_at", using: :btree
+  add_index "top_youtube_videos", ["category_id", "tag"], name: "index_top_youtube_videos_on_category_id_and_tag", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name",       limit: 255

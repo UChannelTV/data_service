@@ -30,6 +30,13 @@ Rails.application.routes.draw do
         delete :destroy
       end
     end
+    
+    resources :top_youtube_videos do
+      collection do
+        get :index, :imported, :active
+        post :import, :activate
+      end
+    end
         
     resources :videos
     resources :filler_videos
